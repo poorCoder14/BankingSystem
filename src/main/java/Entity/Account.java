@@ -7,14 +7,37 @@ public class Account {
     private boolean accountVIPStatus;
     private int accountTotalSavings;
     private String accountSavingsId;
-
+    private boolean isAccountLocked;
     // Constructors, getters, and setters
+    public Account() {
+    	
+    }
+    
+    public boolean isAccountLocked() {
+		return isAccountLocked;
+	}
 
-    public String getAccountNumber() {
+	public void setAccountLocked(boolean isAccountLocked) {
+		this.isAccountLocked = isAccountLocked;
+	}
+
+	public String getAccountNumber() {
         return accountNumber;
     }
 
-    public void setAccountNumber(String accountNumber) {
+    public Account(String accountNumber, String accountOTP, int accountBalance, boolean accountVIPStatus,
+			int accountTotalSavings, String accountSavingsId, boolean isAccountLocked) {
+		super();
+		this.accountNumber = accountNumber;
+		this.accountOTP = accountOTP;
+		this.accountBalance = accountBalance;
+		this.accountVIPStatus = accountVIPStatus;
+		this.accountTotalSavings = accountTotalSavings;
+		this.accountSavingsId = accountSavingsId;
+		this.isAccountLocked = isAccountLocked;
+	}
+
+	public void setAccountNumber(String accountNumber) {
         this.accountNumber = accountNumber;
     }
 

@@ -430,5 +430,29 @@ public class CustomerDAO_Impl{
 			return false;
 		}
 	}
-
+	
+	public String getCustomerPassword(Customer customer) {
+	    try  {
+	        String sql = "SELECT customer_password FROM Customer WHERE customer_id = ?";
+	        PreparedStatement statement = connection.prepareStatement(sql);
+	        
+	        // Set the customer ID value for the placeholder in the SQL statement
+	        statement.setString(1, customer.getCustomerId());
+	        
+	        // Execute the query
+	        ResultSet resultSet = statement.executeQuery();
+	        
+	        // Check if the query returned a result
+	        if (resultSet.next()) {
+	            // Retrieve the password from the result set
+	            return resultSet.getString("customer_password");
+	        } else {
+	            // If no result was found, return null or an appropriate default value
+	            return null;
+	        }
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	        return null;
+	    }
+	}
 }

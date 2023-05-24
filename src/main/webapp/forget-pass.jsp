@@ -13,7 +13,7 @@
 <script type="text/javascript" src="/js/jquery-3.3.1.min.js"></script>
 <script type="text/javascript" src="/js/jquery.validate.min.js"></script>
 </head>
-<body>
+<body style="background-image: linear-gradient(to right, #7F7FD5, #86A8E7, #91EAE4)">
 	<div class="card text-center mx-auto" style="width: 500px; height: 100%; margin-top: 5%">
 		<div class="card-header h5 text-white bg-primary">Password Reset</div>
 		<div class="card-body px-5">

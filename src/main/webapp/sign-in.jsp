@@ -103,7 +103,7 @@
 				<div class="login100-pic js-tilt" data-tilt>
 					<img src="images/img-01.png" alt="IMG">
 				</div>
-				<form class="login100-form validate-form" method="post">
+				<form action="/BankingSystem/sign-in" class="login100-form validate-form" method="post">
 					<span class="login100-form-title"> Member Login </span>
 					<span style="color: red">${sessionScope.loginFail }</span>
 					<span style="color: red">${sessionScope.successSignUp }</span>

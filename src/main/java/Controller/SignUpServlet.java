@@ -117,6 +117,7 @@ public class SignUpServlet extends HttpServlet {
 		} else {
 			account.setAccountNumber(accountNumber);
 			account.setAccountOTP(otp);
+			account.setAccountLocked(false);
 			cusDao.addAccount(account);
 			
 			customer.setCustomerId(cusDao.generateUniqueId());
@@ -128,6 +129,7 @@ public class SignUpServlet extends HttpServlet {
 			customer.setCustomerUsername(username);
 			customer.setCustomerPassword(cfmPassword);
 			customer.setCustomerBankAccount(accountNumber);
+			customer.setLoginAttempts(0);
 			cusDao.signUp(customer);
 
 			
