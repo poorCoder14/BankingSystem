@@ -15,7 +15,7 @@
     <br/>
     <h3>${message}</h3>
     <br/>
-    <a href="index.jsp">Back to the homepage!</a>
+    <a href="/BankingSystem/homepage">Back to the homepage!</a>
 </div>
 </body>
 </html>

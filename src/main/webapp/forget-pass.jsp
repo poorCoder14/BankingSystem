@@ -19,6 +19,7 @@
 		<div class="card-body px-5">
 			<p class="card-text py-2">Enter your email address and we'll send
 				you an email with instructions to reset your password.</p>
+			<span style="color: red">${sessionScope.noEmail }</span>
 			<form id="resetForm" action="reset_password" method="post">
 				<div class="form-outline">
 					<input type="text" id="typeEmail"  name="email" class="form-control my-3" required /> <label

@@ -14,7 +14,7 @@ import DatabaseConnection.DatabaseConnection;
 import Entity.Account;
 import Entity.Customer;
 
-public class CustomerDAO_Impl{
+public class CustomerDAO_Impl {
 	private Connection connection = DatabaseConnection.getConnection();
 
 	public Customer verifyLogin(String username, String password) {
@@ -430,29 +430,55 @@ public class CustomerDAO_Impl{
 			return false;
 		}
 	}
-	
+
 	public String getCustomerPassword(Customer customer) {
-	    try  {
-	        String sql = "SELECT customer_password FROM Customer WHERE customer_id = ?";
-	        PreparedStatement statement = connection.prepareStatement(sql);
-	        
-	        // Set the customer ID value for the placeholder in the SQL statement
-	        statement.setString(1, customer.getCustomerId());
-	        
-	        // Execute the query
-	        ResultSet resultSet = statement.executeQuery();
-	        
-	        // Check if the query returned a result
-	        if (resultSet.next()) {
-	            // Retrieve the password from the result set
-	            return resultSet.getString("customer_password");
-	        } else {
-	            // If no result was found, return null or an appropriate default value
-	            return null;
-	        }
-	    } catch (SQLException e) {
-	        e.printStackTrace();
-	        return null;
-	    }
+		try {
+			String sql = "SELECT customer_password FROM Customer WHERE customer_id = ?";
+			PreparedStatement statement = connection.prepareStatement(sql);
+
+			// Set the customer ID value for the placeholder in the SQL statement
+			statement.setString(1, customer.getCustomerId());
+
+			// Execute the query
+			ResultSet resultSet = statement.executeQuery();
+
+			// Check if the query returned a result
+			if (resultSet.next()) {
+				// Retrieve the password from the result set
+				return resultSet.getString("customer_password");
+			} else {
+				// If no result was found, return null or an appropriate default value
+				return null;
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return null;
+		}
 	}
+
+	public boolean isEmailExist(String email) {
+		try {
+			String sql = "SELECT COUNT(*) AS count FROM Customer WHERE customer_email = ?";
+			PreparedStatement statement = connection.prepareStatement(sql);
+
+			// Set the email value for the placeholder in the SQL statement
+			statement.setString(1, email);
+
+			// Execute the query
+			ResultSet resultSet = statement.executeQuery();
+
+			// Retrieve the count value from the result set
+			if (resultSet.next()) {
+				int count = resultSet.getInt("count");
+				return count > 0;
+			} else {
+				// If no result was found, return false
+				return false;
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return false;
+		}
+	}
+
 }

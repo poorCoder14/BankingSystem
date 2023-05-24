@@ -8,6 +8,9 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
+import DAO.CustomerDAO_Impl;
 
 /**
  * A Java Servlet to handle requests to reset password for customer
@@ -40,8 +43,7 @@ public class ResetPasswordServlet extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-
-		String page = "reset_password.jsp";
+		String page = "forget-pass.jsp";
 		request.getRequestDispatcher(page).forward(request, response);
 
 	}
@@ -49,26 +51,32 @@ public class ResetPasswordServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		String recipient = request.getParameter("email");
-		String subject = "Your Password has been reset";
+		HttpSession session = request.getSession();
+		CustomerDAO_Impl cusDao = new CustomerDAO_Impl();
+		if (!cusDao.isEmailExist(recipient)) {
+			session.setAttribute("noEmail", "The email you entered is not associated with any account in our system!");
+			response.sendRedirect("reset_password");
+		} else {
+			String subject = "Your Password has been reset";
 
-		CustomerServices customerServices = new CustomerServices(request, response);
-		String newPassword = customerServices.resetCustomerPassword(recipient);
+			CustomerServices customerServices = new CustomerServices(request, response);
+			String newPassword = customerServices.resetCustomerPassword(recipient);
 
-		String content = "Hi, this is your new password: " + newPassword;
-		content += "\nNote: for security reason, " + "you must change your password after logging in.";
+			String content = "Hi, this is your new password: " + newPassword;
+			content += "\nNote: for security reason, " + "you must change your password after logging in.";
 
-		String message = "";
+			String message = "";
 
-		try {
-			EmailUtility.sendEmail(host, port, email, name, pass, recipient, subject, content);
-			message = "Your password has been reset. Please check your e-mail.";
-		} catch (Exception ex) {
-			ex.printStackTrace();
-			message = "There were an error: " + ex.getMessage();
-		} finally {
-			request.setAttribute("message", message);
-			request.getRequestDispatcher("message.jsp").forward(request, response);
+			try {
+				EmailUtility.sendEmail(host, port, email, name, pass, recipient, subject, content);
+				message = "Your password has been reset. Please check your e-mail.";
+			} catch (Exception ex) {
+				ex.printStackTrace();
+				message = "There were an error: " + ex.getMessage();
+			} finally {
+				request.setAttribute("message", message);
+				request.getRequestDispatcher("message.jsp").forward(request, response);
+			}
 		}
 	}
-
 }
